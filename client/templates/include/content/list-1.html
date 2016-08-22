@@ -1,0 +1,30 @@
+<div class="content">
+    <h2>
+        <p><span>推荐</span>文章 </p>
+    </h2>
+    <div class="blogs">
+        {% for item in blogs %}
+        <div class="blog">
+            <h3><a href="/client/lookblog?id={{ item.id }}">{{ item.blogHead }}</a></h3>
+            <div class="blogImg">
+                <img src="{{ item.blogPic }}" />
+                </div>
+            <ul>
+                {% autoescape off %}
+                <p class="introduction">{{ item.introduction |slice:"300"}}……</p>
+                
+                {% endautoescape %}
+
+            </ul>
+            <a href="/client/lookblog?id={{ item.id }}" class="textsee">阅读全文</a>
+            <p class="autor">
+                <span>作者：王志文</span>
+                <span>分类【<a href="">{{ item.columnClass.columnName }}</a>】</span>
+                <span>评论(<a href="">129</a>)</span>
+                <span>浏览(<a href="">456</a>)</span>
+            </p>
+        </div>
+        {% empty %}暂无论题
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>欧，原来是你呀</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/client/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="/static/client/css/bootstrap.css" rel="stylesheet" type="text/css" >
+    <link rel="stylesheet" type="text/css" href="/static/client/css/clearcss.css">
+    <link href="/static/client/css/index.css" rel="stylesheet" type="text/css">
+</head>
+<body  class="home blog">
+
+    <!-- 导航栏以及头部 -->
+
+    {% include "include/nav/nav-1.html" %}
+    <div class="main">
+        <!-- 引入左侧导航栏 -->
+        {% include "include/sides/left-1.html" %}
+        <!-- 引入右侧内容列表 -->
+        {% include "include/content/list-1.html" %}
+    </div>
+    <script type="text/javascript" src="/static/client/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/static/client/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/client/js/index.js"></script>
+</body>
+</html>

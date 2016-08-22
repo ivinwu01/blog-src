@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+</head>
+<body>
+<form action="upload" method="post"  enctype="multipart/form-data">
+    <input type="file" name="file"/>
+    <input type="submit" value="提交" />
+</form>
+<div>
+	{% for file in files %}
+	<a href="/media/{{ file.fileUrl }}" download="{{ file.fileName }}">下载文件[{{ file.fileName }}]</a>
+	<br>
+	{% endfor %}
+</div>
+</body>
+</html>

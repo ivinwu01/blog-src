@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>随走随停</title>
+	<link href="/static/client/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="/static/client/css/bootstrap.css" rel="stylesheet" type="text/css" >
+	<link rel="stylesheet" type="text/css" href="/static/client/css/clearcss.css">
+	<link rel="stylesheet" type="text/css" href="/static/client/css/stylesheet.css">
+</head>
+<body>
+<div class="home blog">
+	{% include "include/nav/nav-2.html" %}
+	<article class="blogs">
+		<h1 class="t_nav">
+			<span>
+				当前位置：
+				<a href="/client">首页</a>&nbsp; > &nbsp;
+				<a href="/client/say">随走随停</a>&nbsp; > &nbsp;
+				<a href="">随笔</a>
+			</span>
+			<a href="/client" class="n1">网站首页</a>
+			<a href="" class="n2">随走随停</a>
+		</h1>
+		<div class="index_about">
+			{% for item in say %}
+			
+			<div class="say">
+				<span class="sayTime">
+					{{ item.createTime }}
+				</span>
+				<div class="sayContent"> 
+				{% autoescape off %}
+				{{ item.blogContent }}
+				{% endautoescape %}
+				</div>
+			</div>
+			
+			{% endfor %}
+
+		</div>
+		{% include 'include/sides/right-1.html' %}
+	</article>
+	<footer>
+		<div>
+			@2016
+		</div>
+	</footer>
+</div>
+</body>
+</html>

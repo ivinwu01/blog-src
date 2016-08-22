@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>博客</title>
+</head>
+<body>
+<nav>
+	<a href="/update">添加新闻</a>
+	<a href="/">首页</a>
+	<ul>
+		{% for item in news %}
+		<li>
+			<a href="/news?newsId={{ item.newId }}">{{ item.newHead }}</a>
+			<span style="color:#454545;font-size:12px;">
+				{{ item.createssTime}}
+			</span>
+			<span>
+				<a href="/update?delete={{ item.newId }}">删除</a>|
+				<a href="/update?update={{ item.newId }}">修改</a>
+			</span>
+		</li>
+		{% empty %}暂无论题
+		{% endfor %}
+	</ul>
+	<form method="post" action="/say">
+		<input type="text" name="sayContent">
+		<select name="sayLabel">
+			<option value="心情">心情</option>
+			<option value="原创">原创</option>
+			<option value="转载">转载</option>
+		</select>
+		<input type="submit" name="submitSay" value="添加随记">
+	</form>
+
+	{% for item in says %}
+		<div style="width:500px;">
+			<a href="">{{ item.sayContent }}</a><span>{{ item.createssTime }}</span>
+		</div>
+	{% endfor %}
+</nav>
+</body>
+</html>

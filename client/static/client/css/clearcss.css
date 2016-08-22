@@ -1,0 +1,32 @@
+/*
+样式重置
+*/
+* {
+	margin: 0;
+	padding: 0;
+	word-wrap:break-word;  /*自动换行*/
+	white-space:normal;  /*自动换行*/
+}
+body {
+	background: #FFF;
+	color: #333;
+	font-size: 12px/1.6em Helvetica, Arial, sans-serif;
+	width: 80%;
+	margin: 0 auto ;
+	box-shadow: 1px  -2px #666;
+	/*height:100%;*/
+}
+a {
+	color: #0287CA;
+	text-decoration: none;
+}
+ul,li {
+	list-style: none;
+}
+img { border: none;
+}
+/*h1,h2,h3,h4,h5,h6 { font-size: 1em;}*/
+html {
+	overflow: -moz-scrollbars-vertical; /*火狐浏览器下一直有滚动条*/
+}
+p { padding:0;}

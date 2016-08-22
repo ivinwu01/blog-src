@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>常篇哒论</title>
+	<link href="/static/client/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="/static/client/css/bootstrap.css" rel="stylesheet" type="text/css" >
+	<link rel="stylesheet" type="text/css" href="/static/client/css/clearcss.css">
+	<link rel="stylesheet" type="text/css" href="/static/client/css/stylesheet.css">
+	<link rel="stylesheet" href="/static/client/css/share.css">
+</head>
+<body>
+<div class="home blog">
+	{% include "include/nav/nav-2.html" %}
+	<article class="blogs">
+		<h1 class="t_nav">
+			<span>
+				当前位置：
+				<a href="/">首页</a>&nbsp; > &nbsp;
+				<a href="/say">常篇哒论</a>&nbsp; > &nbsp;
+				<a href="/">随笔</a>
+			</span>
+			<a href="/" class="n1">网站首页</a>
+			<a href="" class="n2">常篇哒论</a>
+		</h1>
+		<div class="blogs-list">
+			{% for item in blogs %}
+	        <div class="blog">
+	        	
+	            <h3><a href="/client/lookblog?id={{ item.id }}">{{ item.blogHead }}</a>
+		            <span class="blogTime">
+		            	{{ item.createTime }}
+		            	<img src="/static/client/images/circle.png" alt="">
+		            </span>
+		        </h3>
+	            <div class="blogImg">
+                <img src="{{ item.blogPic }}" />
+                </div>
+                {% autoescape off %}
+                <p class="introduction">{{ item.introduction |slice:"300"}}……</p>
+                
+                {% endautoescape %}
+	            <a href="/client/lookblog?id={{ item.id }}" class="textsee">阅读全文</a>
+	            <p class="autor">
+	                <span>作者：王志文</span>
+	                <span>分类【<a href="">{{ item.columnClass.columnName }}</a>】</span>
+	                <span>评论(<a href="">129</a>)</span>
+	                <span>浏览(<a href="">456</a>)</span>
+	            </p>
+	        </div>
+	        {% empty %}暂无论题
+	        {% endfor %}
+		</div>
+		{% include 'include/sides/right-1.html' %}
+	</article>
+	<footer>
+
+	</footer>
+</div>
+</body>
+</html>

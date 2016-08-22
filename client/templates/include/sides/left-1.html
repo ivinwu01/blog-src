@@ -1,0 +1,39 @@
+<div class="left">
+    <div class="aboutme">
+        <p class="about_img">
+            <a href="about"><span>关于我</span></a>
+        </p>
+        <div class="about_text">
+            <h3>执子之手，与子偕老@欧欧
+            </h3>
+            <!-- <p>删删写写，回回忆忆，虽无法行云流水，却也可碎言碎语。</p> -->
+        </div>
+        <div class="about_info">
+            <p>姓名： <span>{{admin.adminAccount}}</span></p>
+            <p>职业：  <span>{{admin.adminJob}}</span>  </p>
+            <p>籍贯： <span>{{admin.adminPortrait}}</span></p>
+            <p>电话： <span>{{admin.adminTelephone}}</span></p>
+            <p>邮箱：<span>{{admin.adminEmail}}</span></p>
+            <p><a href="login">更新动态</a></p>
+        </div>
+        <div class="updataLists">
+            <h3>最近更新</h3>
+            {% for item in blogs %}
+            <p>
+                <a href="/client/lookblog?id={{ item.id }}">{{ item.blogHead }}
+                <span style="color:#454545;font-size:12px;">
+                    {{ item.createTime}}
+                </span>
+                </a>
+            </p>
+             {% empty %}暂无更新
+            {% endfor %}
+        </div>
+        <div class="pushLists">
+            <h3>友情链接</h3>
+            <p style="padding-left: 33px;">
+                <a href="https://github.com/suAminWen/" target="_blank">源代码 in github</a>
+            </p>
+        </div>
+    </div>
+</div>

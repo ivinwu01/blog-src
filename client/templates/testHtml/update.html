@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>添加博文</title>
+	<link href="/static/css/update.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/static/public/ckeditor/samples/css/samples.css">
+	<link rel="stylesheet" href="/static/public/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css">
+
+</head>
+<body>
+<div class="all">
+	<div class="fir-hed">
+		<!--头部模块标题-->
+		<div class="head">
+			<div class="head-left">
+				<h2>
+					<span class="write">写博客</span>
+				</h2>
+			</div>
+			<div class="head-right">
+				<span class="draft">
+					<a href="#">草稿箱</a>
+				</span>|
+				<a href="#">提建议</a>|
+				<a href="#">新功能说明</a>|
+				<a href="/">返回主页</a>
+			</div>
+		</div>
+		<div class="middle">
+			<!--中间板块头部模板-->
+			<div class="middle-top">
+				<div class="middle-left">
+					<span class="paper-s">信纸</span>
+					<span class="paper-list">
+						<a href="#">信纸1</a>
+						<a href="#">信纸2</a>
+						<a href="#">信纸3</a>
+					</span>
+					<a href="#">
+						<span>更多模板</span>
+					</a>
+				</div>
+				<div class="middle-right">
+					<a href="#">
+						<span class="last">写模板日志</span>
+					</a>
+				</div>
+			</div>
+			<!--信纸工具条容器-->
+			<div class="paper-tool">
+				<div class="tool-container">
+					<a class="veSubmit" href="#">发表</a>|
+					<a class="save" href="#">保存</a>|
+					<a class="cut-edit" href="#">撤销</a>|
+					<a class="recover" href="#">恢复</a>|
+				</div>
+			</div>
+			<!--编辑内容区域-->
+
+
+			<div class="edit">
+				<div class="edit-top">
+					<input type="text" name="newHead" class="edit-input" placeholder="请在这里输入博客标题" value="{{ news.newHead}}"/>
+				</div>
+				<div id="editor"></div>
+			</div>
+			<!--end底部板块区-->
+			<div class="end">
+				<div class="end-head">
+					<div class="end-head-h">
+						<lable class="desperate">分类:</lable>
+						<select class="end-select">
+							<option value="手机博客">手机博客</option>
+							<option value="好文转载">好文转载</option>
+							<option value="想想吧^^">想想吧^^</option>
+						</select>
+						<a href="#" class="add" title="添加分类">添加分类</a>
+					</div>
+					<div class="end-head-m">
+						<lable>权限:</lable>
+						<select class="end-m-select">
+							<option value="仅自己可见">仅自己可见</option>
+							<option value="好友可见">好友可见</option>
+							<option value="所有人可见">所有人可见</option>
+							<option value="指定好友可见">指定好友可见</option>
+						</select>
+					</div>
+					<div class="end-foot">
+						<a href="#" class="attach-letter">
+						<span>附件</span>
+						</a>
+						<a href="#" class="icon_attach">
+							<span>更多设置</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div></div><!--草稿提示信息-->
+
+			<!--结束区块-->
+			<div class="pub-cancel">
+				<div class="setting">
+					<input type="button" value="预览" class="review">
+					<input type="button" value="保存" class="save-letter">
+				</div>
+				<div class="pb-canl">
+					<input type="button" value="取消" class="cancel">
+					<input type="button" title="发布博客"  value="发布"  name="publish">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<p class="copyri">
+			"copyright@wangzhiwen"
+			<a href="#" class="copyri">王志文</a>
+		</p>
+		<p>
+			<a href="#" class="copyri">版权所有</a>
+		</p>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="/static/js/jquery1.8.3.js"></script>
+<script src="/static/public/ckeditor/ckeditor.js"></script>
+<script src="/static/public/ckeditor/samples/js/sample.js"></script>
+<script>
+	initSample();
+</script>
+<script src="/static/js/updateNews.js"></script>
+
+</html>

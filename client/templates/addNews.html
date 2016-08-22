@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<title>更新博客</title>
+	<link rel="stylesheet" href="/static/public/ckeditor/samples/css/samples.css">
+	<link rel="stylesheet" href="/static/public/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css">
+	<style type="text/css">
+		html,body { height:95%; }
+		.ImgFile { display: none }
+		.ImgName { width: 60%; }
+		.imgArea { width:100%; }
+	    .center { width:90%;margin:0 auto;height:100%;margin-top:30px; }
+	    .leftTitle { width:20%;height:100%;display:block;float:left; }
+	    .newsNeed { width:100% }
+	    input[name="newsHead"] { width:90%;height:30px; }
+	    textarea[name="introduction"] { width:90%;height:120px }
+	    .editContent { width:78%;height:100%;float:left; }
+	    .choice-box {  display:inline;margin-right:15px;float:right; }
+	    .style-box { display:inline }
+	</style>
+</head>
+<body>
+<form class="news-box" method="post">
+	<div class="center" style="">
+		<div class="leftTitle" style="">
+			<div class="newsNeed">
+        <input type="text" name="newsId" value="{{ news.newId }}" style="display:none">
+				<label for="newsHead">博文标题:</label>
+				<input type="text" placeholder="博文标题" name="newsHead" style="" value="{{ news.newHead }}"/><br>
+				<label for="introduction">博文简介:</label>
+				<textarea placeholder="博文简介" name="introduction" style="">{{ news.introduction }}</textarea><br>
+				<label for="newClassification">博文分类:</label>
+				<select name="newClassification" id="newClassification">
+					<option value="0">日记</option>
+					<option value="1">python</option>
+					<option value="2">前端</option>
+					<option value="3">服务器</option>
+				</select>
+				<br>
+				<label for="newsPic">博文配图:</label>
+				<div class="newsPic-box">
+					<input type="file" class="ImgFile" id="ImgFile" name="newsPic"  accept="image/*">
+					<input type="text" class="ImgName">
+					<a href="javascript:void(0)" class="show">上传图片</a>
+					<div style="width: 90%;">
+						<img alt="图片区域" class="imgArea" src="{{ news.newPic }}"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="editContent" style="">
+			<div class="editor-box">
+				<div id="editor">
+				</div>
+        <textarea name="newsContent" style="display:none">{{ news.newContent }}</textarea>
+			</div>
+			<div class="submit-box">
+				<div class="style-box" style="">
+					<input type="checkbox">推荐
+					<input type="checkbox">所有人可见
+				</div>
+				<div class="choice-box" style="">
+					<input type="button" name="cancel" value="取消">
+					<input type="button" name="save" value="暂存">
+					<input type="button" name="publish" value="发布">
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</form>
+</body>
+<script type="text/javascript" src="static/js/jquery1.8.3.js"></script>
+<script type="text/javascript" src="static/js/upimg.js"></script>
+<script src="/static/public/ckeditor/ckeditor.js"></script>
+<script src="/static/public/ckeditor/samples/js/sample.js"></script>
+<script type="text/javascript" src="/static/js/jquery.form.js"></script>
+<script type="text/javascript" src="/static/js/updateNews.js"></script>
+<script>
+	$(function(){
+    initSample();
+    $newsContent=$("textarea[name='newsContent']")
+    CKEDITOR.instances.editor.setData($newsContent.val())
+		$(".show").click(function(){
+			$(".ImgFile").click()
+		})
+		$(".ImgFile").change(function(){
+			$(".ImgName").val($(this).val());
+			$(".imgArea").attr("src",getFileUrl("ImgFile"));
+		})
+	})
+
+	//获取input[file]图片的url Important
+	function getFileUrl(fileId) {
+		var url;
+		var file = document.getElementById(fileId);
+		var agent = navigator.userAgent;
+		if (agent.indexOf("MSIE")>=1) {
+		url = file.value;
+		} else if(agent.indexOf("Firefox")>0) {
+		url = window.URL.createObjectURL(file.files.item(0));
+		} else if(agent.indexOf("Chrome")>0) {
+		url = window.URL.createObjectURL(file.files.item(0));
+		}
+		return url;
+	}
+</script>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>查看博文</title>
+	<link href="/static/client/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="/static/client/css/bootstrap.css" rel="stylesheet" type="text/css" >
+	<link rel="stylesheet" type="text/css" href="/static/client/css/clearcss.css">
+	<link rel="stylesheet" type="text/css" href="/static/client/css/stylesheet.css">
+</head>
+<body>
+<div class="home blog">
+	{% include "include/nav/nav-2.html" %}
+	<article class="blogs">
+		<h1 class="t_nav">
+			<span>
+				当前位置：
+				<a href="/">首页</a>&nbsp; > &nbsp;
+				<a href="/">常篇哒论</a>&nbsp; > &nbsp;
+				<a href="/">随笔</a>
+			</span>
+			<a href="/" class="n1">网站首页</a>
+			<a href="" class="n2">常篇哒论</a>
+		</h1>
+		<div class="index_about">
+			<h2 class="c_titile">
+				{{ blog.blogHead }}
+			</h2>
+			<p class="box_c">
+				<span>
+					{{ blog.createTime }}
+				</span>
+				<span>编辑:王志文</span>
+				<span>阅读(2053)</span>
+			</p>
+			<div class="infos">
+				{% autoescape off %}
+		        {{ blog.blogContent }}
+		        {% endautoescape %}
+			</div>
+			<div class="keybq">
+				<p>
+					<spqn>关键字词：</spqn>
+				</p>
+			</div>
+			<div class="nextinfo">
+				<p>上一篇：</p>
+				<p>下一篇：</p>
+			</div>
+			<div class="otherlink">
+				<h2>
+					相关文章
+				</h2>
+				<ul>
+					<li>文章1</li>
+					<li>文章2</li>
+				</ul>
+			</div>
+		</div>
+		{% include 'include/sides/right-1.html' %}
+	</article>
+	<footer>
+
+	</footer>
+</div>
+</body>
+</html>

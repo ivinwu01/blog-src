@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>发布信息</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/public/lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/public/lib/bootstrap/css/theme.css">
+    <link rel="stylesheet" href="/static/public/lib/font-awesome/css/font-awesome.css">
+    
+    <link rel="stylesheet" href="/static/public/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css">
+    <style type="text/css">
+        .ImgFile { display: none }
+        .ImgName { width: 60%; }
+        .imgArea { width:120px; }
+        .leftTitle { width: 100%; }
+        .center { width:98%;margin:0 auto;height:100%;margin-top:30px; }
+        .blogNeed { width:100% }
+        input[name="blogHead"],textarea[name="introduction"],.ImgName{ width:90%;}
+        textarea[name="introduction"] {height: 120px;}
+        .editContent { width:100%;height:100%;}
+        .choice-box {  display:inline;margin-right:15px;float:right; }
+        .style-box { display:inline }
+        .blogPic-box {  display:inline }
+        th,td,tr {margin: 0;padding:0;}
+        th {width:10%;}
+        td {width:39%;}
+        label {display: inline-block;}
+    </style>
+</head>
+<body class=""> 
+<!--引入公用部分左侧导航栏和头部样式-->
+{% include "include/nav.html" %}
+
+<!--中间部分-->
+<div class="content">
+    <ul class="breadcrumb">
+        <li><a href="" class="addr">信息管理</a> <span class="divider"> >>> </span></li>
+        <li class="active">发布信息</li>
+    </ul>
+    <div class="header">
+        2016-08-20 08:53
+    </div>
+    
+    <form class="blog-box" method="post">
+        <div class="center" style="">
+            <div class="leftTitle" style="">
+                <table style="width:100%;">
+                    <tr>
+                        <th>
+                            <label for="blogHead">博文标题:</label>
+                        </th>
+                        <td>
+                            <input type="text" placeholder="博文标题" name="blogHead" style="" value="{{ blog.blogHead }}"/>
+                        </td>
+                        <th>
+                            <label for="blogPic">博文配图:</label>
+                        </th>
+                        <td>
+                            <div class="blogPic-box">
+                                <a href="javascript:void(0)" class="show">上传图片</a>
+                                
+                                <input type="file" class="ImgFile" id="ImgFile" name="blogPic"  accept="image/*">
+                                {# <input type="text" class="ImgName"> #}
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr height="120px;">
+                        <th><label for="introduction">博文简介:</label></th>
+                        <td><textarea placeholder="博文简介" name="introduction" style="">{{ blog.introduction }}</textarea></td>
+                        <th><label></label></th>
+                        <td><img alt="" class="imgArea" src="{{ blog.blogPic }}"/></td>
+                    </tr>
+                    <tr>
+                        <th><label for="blogsClassification">博文分类:</label></th>
+                        <td> 
+                            <select name="blogsClassification" id="blogsClassification"> 
+                                {% for item in classifications%}
+                                <option value="{{ item.id }}">{{ item.classificationName }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <th><label for="columnClass">所属栏目:</label></th>
+                        <th>
+                            <select name="columnClass">
+                                {% for item in columnClass%}
+                                <option value="{{ item.id }}">{{ item.columnName }}</option>
+                                {% endfor %}
+                            </select>
+                        </th>
+                    </tr>
+                </table>
+                <input type="text" name="id" value="{{ blog.id }}" style="display:none">
+            </div>
+            <div class="editContent" style="">
+                <div class="editor-box">
+                    <div id="editor">
+                    </div>
+            <textarea name="blogContent" style="display:none">{{ blog.blogContent }}</textarea>
+                </div>
+                <div class="submit-box">
+                    <div class="style-box" style="">
+                        <input type="checkbox">推荐
+                        <input type="checkbox">所有人可见
+                    </div>
+                    <div class="choice-box" style="">
+                        <input type="button" name="cancel" value="取消">
+                        <input type="button" name="save" value="暂存">
+                        <input type="button" name="publish" value="发布">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<!--中间部分结束-->
+<!--底部开始-->
+<footer>
+    <hr>
+    <p>&copy; 2016 <b>华北理工大学智慧软件应用研发工作室</b></p>
+</footer>
+<!--底部开始-->
+
+<script src="/static/public/jquery-2.0.3.min.js" type="text/javascript"></script>
+<script src="/static/public/lib/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/public/jquery.form.js"></script>
+<script src="/static/public/ckeditor/ckeditor.js"></script>
+<script src="/static/public/ckeditor/samples/js/sample.js"></script>
+<script type="text/javascript" src="/static/cms/js/cms.js"></script>
+<script type="text/javascript" src="/static/cms/js/addblogs.js"></script>
+<script>
+    $(function(){
+        initSample();
+        $newsContent=$("textarea[name='blogContent']")
+        CKEDITOR.instances.editor.setData($newsContent.val())
+        $(".show").click(function(){
+            $(".ImgFile").click()
+        })
+        $(".ImgFile").change(function(){
+            $(".ImgName").val($(this).val());
+            $(".imgArea").attr("src",getFileUrl("ImgFile"));
+        })
+    })
+
+    //获取input[file]图片的url Important
+    function getFileUrl(fileId) {
+        var url;
+        var file = document.getElementById(fileId);
+        var agent = navigator.userAgent;
+        if (agent.indexOf("MSIE")>=1) {
+        url = file.value;
+        } else if(agent.indexOf("Firefox")>0) {
+        url = window.URL.createObjectURL(file.files.item(0));
+        } else if(agent.indexOf("Chrome")>0) {
+        url = window.URL.createObjectURL(file.files.item(0));
+        }
+        return url;
+    }
+</script>
+</body>
+</html>
+
+
