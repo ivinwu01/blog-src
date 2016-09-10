@@ -40,24 +40,33 @@ def update(req):
             reqfile = req.FILES.get('blogPic', False)
             if reqfile:
                 pictureUrl = "cms/static/cms/images/blogPic/" + blogHead + ".jpg"
+                #
+                # 生产环境中长传文件时所需要修改的文件路径
+                # pictureUrl = "static/cms/images/blogPic/" + blogHead + ".jpg"
                 picturePath = os.path.join(basePath, pictureUrl)
                 img = Image.open(reqfile)
                 img.thumbnail((700, 700), Image.ANTIALIAS)  # 对图片进行等比缩放
                 img.save(picturePath, "png")  # 保存图片
             else:
+                #
+                # 生产环境中长传文件时所需要修改的文件路径
+                # pictureUrl = "static/cms/images/1.jpg"  # 选择默认图片
                 pictureUrl = "cms/static/cms/images/1.jpg"  # 选择默认图片
-
+            
+            pictureUrl = pictureUrl[3:]
+            #
+            # 生产环境中长传文件时所需要修改的文件路径
+            # pictureUrl = "/" + pictureUrl
             # 修改博客
             if len(blogs) != 0:
                 blogs.update(blogHead=blogHead, blogContent=blogContent, introduction=introduction,
                              blogsClassification=blogsClassification, columnClass=columnClass)
                 if reqfile:
-                    blogs.update(blogPic=pictureUrl[3:])
-                    # blogs.update(newPic=pictureUrl)
+                    blogs.update(blogPic=pictureUrl)
                 return HttpResponse(2)
             # 新建博客
-            blog = Blogs(blogHead=blogHead, blogContent=blogContent, introduction=introduction, blogPic=pictureUrl[
-                         3:], blogsClassification=blogsClassification, columnClass=columnClass)
+            blog = Blogs(blogHead=blogHead, blogContent=blogContent, introduction=introduction, blogPic=pictureUrl,
+                         blogsClassification=blogsClassification, columnClass=columnClass)
             blog.save()
             return HttpResponse(1)
         except Exception as err:
