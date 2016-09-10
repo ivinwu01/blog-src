@@ -52,7 +52,7 @@ def update(req):
                 blogs.update(blogHead=blogHead, blogContent=blogContent, introduction=introduction,
                              blogsClassification=blogsClassification, columnClass=columnClass)
                 if reqfile:
-                    blogs.update(newPic=pictureUrl[3:])
+                    blogs.update(blogPic=pictureUrl[3:])
                     # blogs.update(newPic=pictureUrl)
                 return HttpResponse(2)
             # 新建博客
