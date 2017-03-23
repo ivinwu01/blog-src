@@ -39,10 +39,10 @@ def update(req):
             # 保存图片
             reqfile = req.FILES.get('blogPic', False)
             if reqfile:
-                pictureUrl = "cms/static/cms/images/blogPic/" + blogHead + ".jpg"
+                # pictureUrl = "cms/static/cms/images/blogPic/" + blogHead + ".jpg"
                 #
                 # 生产环境中长传文件时所需要修改的文件路径
-                # pictureUrl = "static/cms/images/blogPic/" + blogHead + ".jpg"
+                pictureUrl = "static/cms/images/blogPic/" + blogHead + ".jpg"
                 picturePath = os.path.join(basePath, pictureUrl)
                 img = Image.open(reqfile)
                 img.thumbnail((700, 700), Image.ANTIALIAS)  # 对图片进行等比缩放
@@ -53,10 +53,10 @@ def update(req):
                 # pictureUrl = "static/cms/images/1.jpg"  # 选择默认图片
                 pictureUrl = "cms/static/cms/images/1.jpg"  # 选择默认图片
             
-            pictureUrl = pictureUrl[3:]
+            # pictureUrl = pictureUrl[3:]
             #
             # 生产环境中长传文件时所需要修改的文件路径
-            # pictureUrl = "/" + pictureUrl
+            pictureUrl = "/" + pictureUrl
             # 修改博客
             if len(blogs) != 0:
                 blogs.update(blogHead=blogHead, blogContent=blogContent, introduction=introduction,
