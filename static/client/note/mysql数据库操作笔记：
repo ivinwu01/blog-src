@@ -1,0 +1,60 @@
+mysql数据库操作笔记：
+一、sudo service mysql restart启动服务器
+二、mysql -u root -p 登录服务器，如果没有设置密码输入密码是直接回车。
+三、数据库创建：CREATE DATABASE 将要创建的数据库名;
+四、数据库选择：use 将要选择的数据库名;，选择后进行的数据操作就是在该数据下操作
+五、删除数据库：DROP DATABASE 要删除的数据库名;
+六、创建数据表：CREATE TABLE 表名(数据 数据类型）;
+七、删除数据表：DROP TABLE 表名;
+八、插入数据：  INSERT INTO 表名 (元素1，元素2，……) VALUES ('值1'，'值2'，……);
+九、查询数据： SELECT 要查询打印的内容 from 表名 [WHERE 条件];
+十、更新数据：UPDATE 表名 SET 表中元素1=新值1,表中元素2=新值exir2 [WHERE 条件];
+
+
+mysql设置中文输入
+1、#vim /etc/mysql/my.cnf 。(5.5以前系统)在【client】下面加入 default-character-set=utf8
+在【mysqld】下面加入default-character-set=utf8
+Notice：注意 如果修改后不能启动报错试试把default-character-set=utf8改为character_set_server=utf8，仅仅加入到mysqld下面的.client就不需要加了
+2、#vim /etc/mysql/my.cnf 。(5.5以后系统)如下修改：
+[client]
+default-character-set=utf8
+[mysqld]
+default-storage-engine=INNODB
+character-set-server=utf8
+collation-server=utf8_general_ci
+3、重启mysql(/etc/init.d/mysql stop   /etc/init.d/mysql  start)
+4、修成成功，进入mysql查看字符集(mysql>show variables like 'character_set_%';)
+
+
+django 连接mysql:
+一。。创建app   
+	例如 python manage.py startapp TestModel
+二。。修改 TestModel/models.py文件，代码如下：
+	# models.py
+	from django.db import models
+
+	class Test(models.Model):
+	    name = models.CharField(max_length=20)
+三。。在项目的 settings.py 文件中找到 DATABASES 配置项，将其信息修改为：
+	DATABASES = {
+	    'default': {
+	        'ENGINE': 'django.db.backends.mysql',
+	        'NAME': '数据库名',
+	        'USER': '用户名',
+	        'PASSWORD': '密码（如果没有设置则未空）',
+	        'HOST':'localhost',
+	        'PORT':'3306',
+	    }
+	}
+四。。在settings.py中找到INSTALLED_APPS这一项添加创建的app，例如
+	INSTALLED_APPS = (
+	    'django.contrib.admin',
+	    'django.contrib.auth',
+	    'django.contrib.contenttypes',
+	    'django.contrib.sessions',
+	    'django.contrib.messages',
+	    'django.contrib.staticfiles',
+	    'TestModel',               # 添加此项，逗号不可省略
+	)
+五。。命令行中运行python manage.py syncdb，看到几行"Creating table…"的字样，你的数据表就创建好了
+	（ubunt下上述命令不能建全所有的model，因此需要用到命令：python manage.py makemigrations   python manage.py migrate）

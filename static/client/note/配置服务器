@@ -1,0 +1,241 @@
+一、mysql
+1、更新源列表
+    sudo apt-get update
+2、安装mysql
+    sudo apt-get install mysql-server mysql-client
+    软件包设置对话框"中输入mysql中"root"用户的密码以及确认密码
+3、如何判断mysql是否安装成功
+    sudo service mysql restart
+    如果mysql启动成功，处于运行状态说明mysql安装成功。
+4、登录mysql
+    mysql -u root -p
+    输入mysql中"root"用户的密码
+    登录成功。
+5、创建用户:  
+ 
+    CREATE USER 'username'@'host' IDENTIFIED BY 'password';  
+ 
+    说明:username - 你将创建的用户名, host - 指定该用户在哪个主机上可以登陆,如果是本地用户可用localhost, 如果想让该用户可以从任意远程主机登陆,可以使用通配符%. password - 该用户的登陆密码,密码可以为空,如果为空则该用户可以不需要密码登陆服务器.  
+ 
+    例子: CREATE USER 'dog'@'localhost' IDENTIFIED BY '123456';  
+    CREATE USER 'pig'@'192.168.1.101_' IDENDIFIED BY '123456';  
+    CREATE USER 'pig'@'%' IDENTIFIED BY '123456';  
+    CREATE USER 'pig'@'%' IDENTIFIED BY '';  
+    CREATE USER 'pig'@'%';  
+6、授权:  
+ 
+    GRANT privileges ON databasename.tablename TO 'username'@'host'  
+ 
+    说明: privileges - 用户的操作权限,如SELECT , INSERT , UPDATE 等(详细列表见该文最后面).如果要授予所的权限则使用ALL.;databasename - 数据库名,tablename-表名,如果要授予该用户对所有数据库和表的相应操作权限则可用*表示, 如*.*.  
+ 
+    例子: GRANT SELECT, INSERT ON test.user TO 'pig'@'%';  
+    GRANT ALL ON *.* TO 'pig'@'%';  
+ 
+    注意:用以上命令授权的用户不能给其它用户授权,如果想让该用户可以授权,用以下命令:  
+    GRANT privileges ON databasename.tablename TO 'username'@'host' WITH GRANT OPTION;  
+7、修改监听ip
+    在目录/etc/mysql下找到my.cnf，用vim编辑，找到my.cnf里面的    
+    bind-address           = 127.0.0.1
+    将其注释。
+    # bind-address           = 127.0.0.1
+8、mysql设置中文输入
+    1）
+        #vim /etc/mysql/my.cnf 。(5.5以前系统)在【client】下面加入 default-character-set=utf8
+        在【mysqld】下面加入default-character-set=utf8
+        Notice：注意 如果修改后不能启动报错试试把default-character-set=utf8改为character_set_server=utf8，仅仅加入到mysqld下面的.client就不需要加了
+    2）
+        #vim /etc/mysql/my.cnf 。(5.5以后系统)如下修改：
+        [client]
+        default-character-set=utf8
+        [mysqld]
+        default-storage-engine=INNODB
+        character-set-server=utf8
+        collation-server=utf8_general_ci
+    3）
+        重启mysql(/etc/init.d/mysql stop   /etc/init.d/mysql  start)
+    4）
+        修成成功，进入mysql查看字符集(mysql>show variables like 'character_set_%';)
+ 
+9、重启ubuntu
+    sudo reboot
+    重启mysql服务
+10、远程登录
+    用创建的用户名和密码登录
+    成功
+11、说明
+    mysql默认端口号为3306
+    mysql的root帐号不允许做远程登录的帐号
+ 
+二、postgresql
+1、更新源列表
+    sudo apt-get update
+2、安装PostgreSQL
+    sudo apt-get install postgresql
+    系统会提示安装所需磁盘空间，输入"y"，安装程序会自动完成。 安装完毕后，系统会创建一个数据库超级用户“postgres”, 密码为空。这个用户既是不可登录的操作系统用户，也是数据库用户。
+3、修改Linux用户postgres的密码
+    sudo passwd postgres
+4、修改数据库超级用户postgres的密码
+    1) 切换到Linux下postgres用户
+    sudo su postgres
+    2) 登录postgres数据库
+ 
+        psql postgres
+ 
+    这样你会看到postgres提示信息如下：
+        psql (8.4.4)
+        Type "help" for help.
+    并出现postgres的命令行提示符号：
+        postgres=#
+    3)  
+        ALTER USER postgres with PASSWORD 'password';
+     键入“q”返回到Linux命令行。
+5、 设置其它机器上对postgres的访问
+    修改/etc/postgresql/8.4/main/pg_hba.conf:
+    host all all 0.0.0.0/0 md5  #0.0.0.0为地址段，0为多少二进制位
+    例如：192.168.0.0/16代表192.168.0.1-192.168.255.254
+    修改/etc/postgresql/8.4/main/postgresql.conf
+    listen_address = '*'
+ 
+6、重启数据库
+    sudo /etc/init.d/postgresql restart
+7、说明
+    postgresql的默认端口号为5432
+ 
+注：配置完成之后，别忘了将服务器主机的防火墙关闭这些端口的防护
+ 
+ 
+相关参数
+实验室ip：10.16.155.241
+mysql
+端口：5002
+用户名：mysqlroot
+密码：chuangxin2624
+ 
+postgresql
+端口：5003
+用户名：postgres
+密码：chuangxin2624
+ 
+数据库服务登录帐号：sql
+登录密码和root密码：admin
+
+一、mysql
+1、更新源列表
+    sudo apt-get update
+2、安装mysql
+    sudo apt-get install mysql-server mysql-client
+    软件包设置对话框"中输入mysql中"root"用户的密码以及确认密码
+3、如何判断mysql是否安装成功
+    sudo service mysql restart
+    如果mysql启动成功，处于运行状态说明mysql安装成功。
+4、登录mysql
+    mysql -u root -p
+    输入mysql中"root"用户的密码
+    登录成功。
+5、创建用户:  
+ 
+    CREATE USER 'username'@'host' IDENTIFIED BY 'password';  
+ 
+    说明:username - 你将创建的用户名, host - 指定该用户在哪个主机上可以登陆,如果是本地用户可用localhost, 如果想让该用户可以从任意远程主机登陆,可以使用通配符%. password - 该用户的登陆密码,密码可以为空,如果为空则该用户可以不需要密码登陆服务器.  
+ 
+    例子: CREATE USER 'dog'@'localhost' IDENTIFIED BY '123456';  
+    CREATE USER 'pig'@'192.168.1.101_' IDENDIFIED BY '123456';  
+    CREATE USER 'pig'@'%' IDENTIFIED BY '123456';  
+    CREATE USER 'pig'@'%' IDENTIFIED BY '';  
+    CREATE USER 'pig'@'%';  
+6、授权:  
+ 
+    GRANT privileges ON databasename.tablename TO 'username'@'host'  
+ 
+    说明: privileges - 用户的操作权限,如SELECT , INSERT , UPDATE 等(详细列表见该文最后面).如果要授予所的权限则使用ALL.;databasename - 数据库名,tablename-表名,如果要授予该用户对所有数据库和表的相应操作权限则可用*表示, 如*.*.  
+ 
+    例子: GRANT SELECT, INSERT ON test.user TO 'pig'@'%';  
+    GRANT ALL ON *.* TO 'pig'@'%';  
+ 
+    注意:用以上命令授权的用户不能给其它用户授权,如果想让该用户可以授权,用以下命令:  
+    GRANT privileges ON databasename.tablename TO 'username'@'host' WITH GRANT OPTION;  
+7、修改监听ip
+    在目录/etc/mysql下找到my.cnf，用vim编辑，找到my.cnf里面的    
+    bind-address           = 127.0.0.1
+    将其注释。
+    # bind-address           = 127.0.0.1
+8、mysql设置中文输入
+    1）
+        #vim /etc/mysql/my.cnf 。(5.5以前系统)在【client】下面加入 default-character-set=utf8
+        在【mysqld】下面加入default-character-set=utf8
+        Notice：注意 如果修改后不能启动报错试试把default-character-set=utf8改为character_set_server=utf8，仅仅加入到mysqld下面的.client就不需要加了
+    2）
+        #vim /etc/mysql/my.cnf 。(5.5以后系统)如下修改：
+        [client]
+        default-character-set=utf8
+        [mysqld]
+        default-storage-engine=INNODB
+        character-set-server=utf8
+        collation-server=utf8_general_ci
+    3）
+        重启mysql(/etc/init.d/mysql stop   /etc/init.d/mysql  start)
+    4）
+        修成成功，进入mysql查看字符集(mysql>show variables like 'character_set_%';)
+ 
+9、重启ubuntu
+    sudo reboot
+    重启mysql服务
+10、远程登录
+    用创建的用户名和密码登录
+    成功
+11、说明
+    mysql默认端口号为3306
+    mysql的root帐号不允许做远程登录的帐号
+ 
+二、postgresql
+1、更新源列表
+    sudo apt-get update
+2、安装PostgreSQL
+    sudo apt-get install postgresql
+    系统会提示安装所需磁盘空间，输入"y"，安装程序会自动完成。 安装完毕后，系统会创建一个数据库超级用户“postgres”, 密码为空。这个用户既是不可登录的操作系统用户，也是数据库用户。
+3、修改Linux用户postgres的密码
+    sudo passwd postgres
+4、修改数据库超级用户postgres的密码
+    1) 切换到Linux下postgres用户
+    sudo su postgres
+    2) 登录postgres数据库
+ 
+        psql postgres
+ 
+    这样你会看到postgres提示信息如下：
+        psql (8.4.4)
+        Type "help" for help.
+    并出现postgres的命令行提示符号：
+        postgres=#
+    3)  
+        ALTER USER postgres with PASSWORD 'password';
+     键入“q”返回到Linux命令行。
+5、 设置其它机器上对postgres的访问
+    修改/etc/postgresql/8.4/main/pg_hba.conf:
+    host all all 0.0.0.0/0 md5  #0.0.0.0为地址段，0为多少二进制位
+    例如：192.168.0.0/16代表192.168.0.1-192.168.255.254
+    修改/etc/postgresql/8.4/main/postgresql.conf
+    listen_address = '*'
+ 
+6、重启数据库
+    sudo /etc/init.d/postgresql restart
+7、说明
+    postgresql的默认端口号为5432
+ 
+注：配置完成之后，别忘了将服务器主机的防火墙关闭这些端口的防护
+ 
+ 
+相关参数
+实验室ip：10.16.155.241
+mysql
+端口：5002
+用户名：mysqlroot
+密码：chuangxin2624
+ 
+postgresql
+端口：5003
+用户名：postgres
+密码：chuangxin2624
+ 
+数据库服务登录帐号：sql
+登录密码和root密码：admin
